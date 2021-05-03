@@ -10,7 +10,7 @@ Available commands:
 `
 }
 
-function createServer({ logger = () => { } } = {}) {
+function createServer({ logger = () => { }, store } = {}) {
     const CLIENTS = {}
     function emitToServer(client, message) {
         const fullMessage = `${new Date().toLocaleString()} [${client.name}] : ${message}\n`
@@ -30,6 +30,12 @@ function createServer({ logger = () => { } } = {}) {
             client.writeTo(`Unknown command received - ${command}`)
         }
     }
+    function handleMessage(client, message) {
+        logger(client, message)
+        if (store) {
+            store.put(client, message)
+        }
+    }
     return {
         addClient: (id, { name = id, writeTo = () => { } } = {}) => {
             const client = {
@@ -38,13 +44,13 @@ function createServer({ logger = () => { } } = {}) {
                 writeTo
             }
             CLIENTS[id] = client
-            logger(client, 'connected')
+            handleMessage(client, 'connected')
             writeTo(intro(id))
             emitToServer(client, 'connected')
         },
         processClientInput: (id, message) => {
             const client = CLIENTS[id]
-            logger(client, message)
+            handleMessage(client, message)
             if (!client) {
                 throw new Error('Client must be registered')
             }
@@ -61,8 +67,11 @@ function createServer({ logger = () => { } } = {}) {
             }
         },
         postMessage: (id, name, message) => {
-            logger({ id, name }, message)
+            handleMessage({ id, name }, message)
             emitToServer({ name }, message)
+        },
+        getMessages: ({ q } = {}) => {
+            return store.get({ q })
         }
     }
 }

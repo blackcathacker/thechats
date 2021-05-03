@@ -10,6 +10,9 @@ function createRestApiServer(chatServer) {
         chatServer.postMessage(`http://${req.ip}`, req.body.name, req.body.message)
         res.send('Message sent')
     })
+    app.get('/', (req, res) => {
+        res.send(chatServer.getMessages(req.query))
+    })
 
     return app
 }
