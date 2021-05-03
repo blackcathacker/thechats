@@ -59,6 +59,10 @@ function createServer({ logger = () => { } } = {}) {
             } else {
                 handlers.default(client, message)
             }
+        },
+        postMessage: (id, name, message) => {
+            logger({ id, name }, message)
+            emitToServer({ name }, message)
         }
     }
 }

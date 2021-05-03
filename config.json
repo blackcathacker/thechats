@@ -1,0 +1,5 @@
+{
+    "telnetPort": 1339,
+    "ipAddress": "localhost",
+    "serverLogFile": "server.log"
+}
