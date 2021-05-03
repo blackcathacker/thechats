@@ -6,7 +6,7 @@ function onConnection(chatServer) {
         const remoteAddress = sock.remoteAddress + ':' + sock.remotePort
         console.log('new connection from', remoteAddress)
 
-        chatServer.addClient(remoteAddress, { writeTo: data => sock.write(data) })
+        chatServer.addClient(remoteAddress, { writeTo: data => sock.write(data), disconnect: () => sock.end() })
         sock.on('data', data => {
             try {
                 chatServer.processClientInput(remoteAddress, data.toString().replace(REMOVE_TRAILING_NEWLINE, ''))
