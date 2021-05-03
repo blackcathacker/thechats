@@ -6,6 +6,8 @@
 * Persistent logging of commands and messages
 * REST API for posting messages and querying persist log
 
+*BUT* this is a toy. It likely has bugs I haven't found. LOTS of error handling hasn't been added. Definitely needs more test coverage on the features completed near the end. Most importantly you can't really quit a chat session (`:quit` exists, but doesn't totally work, exit out of most telnet clients with `^]quit`).
+
 ## Getting Started
 
 * Requires Node v14 or greater
