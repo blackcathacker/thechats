@@ -1,5 +1,6 @@
 {
-    "telnetPort": 1339,
+    "telnetPort": 1337,
     "ipAddress": "localhost",
-    "serverLogFile": "server.log"
+    "serverLogFile": "server.log",
+    "httpPort": 8080
 }

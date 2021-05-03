@@ -1,4 +1,4 @@
-const COMMAND_REGEX = /^:([a-zA-Z]+)\s*(.*)/
+const COMMAND_REGEX = /^:([a-zA-Z]+)\s*(.*)/i
 
 function intro(id) {
     return `Welcome to THE CHATS server ${id}.
@@ -35,7 +35,7 @@ function createServer({ logger = () => { }, store } = {}) {
             client.name = commandArgs
             emitToServer(client, renameMessage)
         },
-        createRoom: (client, commandArgs) => {
+        createroom: (client, commandArgs) => {
             if (ROOMS.includes(commandArgs)) {
                 client.writeTo('Error - Room already exists\n')
             }
@@ -43,10 +43,10 @@ function createServer({ logger = () => { }, store } = {}) {
             client.room = commandArgs
             client.writeTo(`Now in room ${commandArgs}\n`)
         },
-        listRooms: (client) => {
+        listrooms: (client) => {
             client.writeTo(`List of currently available chat rooms\n - ${ROOMS.map(r => r === client.room ? `${r} *` : r).join('\n - ')}\n`)
         },
-        gotoRoom: (client, commandArgs) => {
+        gotoroom: (client, commandArgs) => {
             if (!ROOMS.includes(commandArgs)) {
                 client.writeTo(`Error - ${commandArgs} does not currently exist. To create it use ':createRoom'\n`)
             }
@@ -112,7 +112,7 @@ function createServer({ logger = () => { }, store } = {}) {
                 handlers.default(client, message)
             }
         },
-        postMessage: (id, name, room, message) => {
+        postMessage: (id, name, room = 'default', message) => {
             handleMessage({ id, name, room }, message)
             emitToServer({ name, room }, message)
         },

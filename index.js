@@ -10,4 +10,4 @@ const logger = config.serverLogFile && createLogger(config.serverLogFile)
 const chatServer = createServer({ logger, store: createStore({ logFile: config.serverLogFile }) })
 
 const telnetServer = createTelnetServer(config.telnetPort, config.ipAddress, chatServer)
-const apiServer = createRestApiServer(chatServer).listen(8080)
+const apiServer = createRestApiServer(chatServer).listen(config.httpPort)

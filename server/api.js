@@ -7,7 +7,7 @@ function createRestApiServer(chatServer) {
     app.use(bodyParser.json())
 
     app.post('/', (req, res) => {
-        chatServer.postMessage(`http://${req.ip}`, req.body.name, req.body.message)
+        chatServer.postMessage(`http://${req.ip}`, req.body.name, req.body.room, req.body.message)
         res.send('Message sent')
     })
     app.get('/', (req, res) => {

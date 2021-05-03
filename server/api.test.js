@@ -31,7 +31,7 @@ describe('api server', () => {
         expect(resp.status).toBe(200)
         expect(resp.data).toBe('Message sent')
         expect(telnetClientWrite).toHaveBeenCalledWith('1/1/2020, 12:00:00 AM [ApiUser] : My rest api message\n')
-        expect(logger).toHaveBeenCalledWith({ id: expect.stringMatching(/http:\/\/.*127\.0\.0\.1/), name: 'ApiUser' }, 'My rest api message')
+        expect(logger).toHaveBeenCalledWith({ id: expect.stringMatching(/http:\/\/.*127\.0\.0\.1/), room: 'default', name: 'ApiUser' }, 'My rest api message')
         expect(chatServer.getMessages()).toHaveLength(2)
     })
     it('returns all messages', async () => {

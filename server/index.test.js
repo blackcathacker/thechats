@@ -46,8 +46,8 @@ describe('chat server', () => {
     })
     test('server calls log for all messages', () => {
         server.addClient('client4')
-        expect(logger).toHaveBeenCalledWith({ id: 'client4', name: 'client4', writeTo: expect.any(Function) }, 'connected')
+        expect(logger).toHaveBeenCalledWith({ id: 'client4', name: 'client4', room: 'default', writeTo: expect.any(Function) }, 'connected')
         server.processClientInput('client4', 'Hello all')
-        expect(logger).toHaveBeenCalledWith({ id: 'client4', name: 'client4', writeTo: expect.any(Function) }, 'Hello all')
+        expect(logger).toHaveBeenCalledWith({ id: 'client4', name: 'client4', room: 'default', writeTo: expect.any(Function) }, 'Hello all')
     })
 })
