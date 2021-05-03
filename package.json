@@ -4,12 +4,16 @@
   "description": "Chatty Chat Chat",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "TZ=UTC jest",
+    "watch-tests": "TZ=UTC jest --watch"
   },
   "repository": {
     "type": "git",
     "url": "github.com/blackcathacker/thechats"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
 }
