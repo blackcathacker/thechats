@@ -1,4 +1,4 @@
-const COMMAND_REGEX = /^:(a-zA-Z) (.*)/
+const COMMAND_REGEX = /^:([a-zA-Z]+)\s*(.*)/
 
 function intro(id) {
     return `Welcome to THE CHATS server ${id}.
@@ -10,7 +10,7 @@ Available commands:
 `
 }
 
-function createServer() {
+function createServer({ logger = () => { } } = {}) {
     const CLIENTS = {}
     function emitToServer(client, message) {
         const fullMessage = `${new Date().toLocaleString()} [${client.name}] : ${message}\n`
@@ -32,19 +32,22 @@ function createServer() {
     }
     return {
         addClient: (id, { name = id, writeTo = () => { } } = {}) => {
-            CLIENTS[id] = {
+            const client = {
                 id,
                 name,
                 writeTo
             }
+            CLIENTS[id] = client
+            logger(client, 'connected')
             writeTo(intro(id))
+            emitToServer(client, 'connected')
         },
         processClientInput: (id, message) => {
             const client = CLIENTS[id]
+            logger(client, message)
             if (!client) {
                 throw new Error('Client must be registered')
             }
-            console.log(`${id} says ${message}`)
             const command = COMMAND_REGEX.exec(message)
             if (command) {
                 const handler = handlers[command[1]]

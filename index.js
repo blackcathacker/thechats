@@ -1,10 +1,12 @@
 const net = require('net')
 const { createServer } = require('./server')
+const { createLogger } = require('./server/file-logger')
 
 const PORT = 1337
 const IPADDR = '127.0.0.1'
+const LOG_FILE = 'server.log'
 
-const chatServer = createServer()
+const chatServer = createServer({ logger: createLogger(LOG_FILE) })
 const netServer = net.createServer(onConnection).on('error', err => {
     throw err
 }).listen(PORT, IPADDR, () => {
