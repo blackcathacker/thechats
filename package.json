@@ -4,6 +4,7 @@
   "description": "Chatty Chat Chat",
   "main": "index.js",
   "scripts": {
+    "start": "node index",
     "test": "TZ=UTC jest",
     "watch-tests": "TZ=UTC jest --watch"
   },

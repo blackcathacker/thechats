@@ -102,7 +102,7 @@ function createServer({ logger = () => { }, store } = {}) {
             }
             const command = COMMAND_REGEX.exec(message)
             if (command) {
-                const handler = handlers[command[1]]
+                const handler = handlers[command[1].toLowerCase()]
                 if (handler) {
                     handler(client, command[2], message)
                 } else {
